@@ -132,8 +132,23 @@ public class ModesDictionary {
 							}
 						}
 						// remove INGORESPECS from invalidSpecs array
-						invalidSpecs = new ArrayList<String>(invalidSpecs.stream()
-								.filter(c -> !Constants.INGORESPECS.contains(c)).collect(Collectors.toList()));
+						/**invalidSpecs = new ArrayList<String>(invalidSpecs.stream()
+								.filter(c -> !Constants.INGORESPECS.contains(c)).collect(Collectors.toList()));**/
+                        List<String> invalidSpecs = new ArrayList<>(Arrays.asList("spec1", "spec2", "spec3", "spec4"));
+                        Set<String> INGORESPECS = new HashSet<>(Arrays.asList("spec2", "spec3"));
+
+                        List<String> filteredSpecs = new ArrayList<>();
+
+                        // Manually filter out items from invalidSpecs that are in INGORESPECS
+                        for (String spec : invalidSpecs) {
+                            if (!INGORESPECS.contains(spec)) {  // Check if the spec is not in INGORESPECS
+                              filteredSpecs.add(spec);        // Add to the filtered list if it's not in INGORESPECS
+                            }
+                        }
+
+                        invalidSpecs = filteredSpecs;
+
+                        System.out.println(invalidSpecs);  // Output: [spec1, spec4]
 						// if invalidSpecs array is empty, set it to none
 						if (invalidSpecs.size() == 0) {
 							invalidSpecs.add("none");
