@@ -24,7 +24,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Set;
+import java.util.HashSet;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -134,7 +135,7 @@ public class ModesDictionary {
 						// remove INGORESPECS from invalidSpecs array
 						/**invalidSpecs = new ArrayList<String>(invalidSpecs.stream()
 								.filter(c -> !Constants.INGORESPECS.contains(c)).collect(Collectors.toList()));**/
-                        List<String> invalidSpecs = new ArrayList<>(Arrays.asList("spec1", "spec2", "spec3", "spec4"));
+                        List<String> invalidSpecs = new ArrayList<String>(Arrays.asList("spec1", "spec2", "spec3", "spec4"));
                         Set<String> INGORESPECS = new HashSet<>(Arrays.asList("spec2", "spec3"));
 
                         List<String> filteredSpecs = new ArrayList<>();
