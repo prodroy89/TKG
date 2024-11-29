@@ -19,6 +19,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.File;
 import java.util.*;
+import java.util.Comparator;
 import java.util.regex.*;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -29,7 +30,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import com.sun.management.OperatingSystemMXBean;
 
 public class TestDivider {
 	private Arguments arg;
@@ -50,24 +50,28 @@ public class TestDivider {
 		defaultAvgTestTime = 40000; // in milliseconds
 	}
 
-	private void divideOnTestTime(List<List<String>> parallelLists, List<Integer> testListTime, int testTime, Queue<Map.Entry<String, Integer>> durationQueue) {
-		/**Queue<Map.Entry<Integer, Integer>> machineQueue = new PriorityQueue<>(
-			(a, b) -> a.getValue() == b.getValue() ? a.getKey().compareTo(b.getKey()) : a.getValue().compareTo(b.getValue())
-		);**/
-		Queue<Map.Entry<String, Integer>> machineQueue = new PriorityQueue<>(new Comparator<Map.Entry<String, Integer>>() {
-			@Override
-			public int compare(Map.Entry<String, Integer> a, Map.Entry<String, Integer> b) {
-				// Compare by value first
-				if (a.getValue().equals(b.getValue())) {
-					// If values are the same, compare by key
-					return a.getKey().compareTo(b.getKey());
-				} else {
-					// Compare by value
-					return a.getValue().compareTo(b.getValue());
-				}
-			}
-		});
-							
+	private void divideOnTestTime(List<List<String>> parallelLists, List<Integer> testListTime, int testTime,
+			Queue<Map.Entry<String, Integer>> durationQueue) {
+		/**
+		 * Queue<Map.Entry<Integer, Integer>> machineQueue = new PriorityQueue<>( (a, b)
+		 * -> a.getValue() == b.getValue() ? a.getKey().compareTo(b.getKey()) :
+		 * a.getValue().compareTo(b.getValue()) );
+		 **/
+		Queue<Map.Entry<String, Integer>> machineQueue = new PriorityQueue<>(
+				new Comparator<Map.Entry<String, Integer>>() {
+					@Override
+					public int compare(Map.Entry<String, Integer> a, Map.Entry<String, Integer> b) {
+						// Compare by value first
+						if (a.getValue().equals(b.getValue())) {
+							// If values are the same, compare by key
+							return a.getKey().compareTo(b.getKey());
+						} else {
+							// Compare by value
+							return a.getValue().compareTo(b.getValue());
+						}
+					}
+				});
+
 		int limitFactor = testTime;
 		int index = 0;
 		while (!durationQueue.isEmpty()) {
@@ -86,12 +90,17 @@ public class TestDivider {
 				parallelLists.get(index).add(testName);
 				testListTime.add(testDuration);
 				if (testDuration < limitFactor) {
-					Map.Entry<Integer,Integer> entry = new AbstractMap.SimpleEntry<>(index, testDuration);
+					Map.Entry<Integer, Integer> entry = new AbstractMap.SimpleEntry<>(index, testDuration);
 					machineQueue.offer(entry);
 				} else {
-					/* If the test time is greater than the limiting factor, set it as the new limiting factor. */
+					/*
+					 * If the test time is greater than the limiting factor, set it as the new
+					 * limiting factor.
+					 */
 					limitFactor = testDuration;
-					System.out.println("Warning: Test " + testName + " has duration " + formatTime(testDuration) + ", which is greater than the specified test list execution time " + testTime + "m. So this value is used to limit the overall execution time.");
+					System.out.println("Warning: Test " + testName + " has duration " + formatTime(testDuration)
+							+ ", which is greater than the specified test list execution time " + testTime
+							+ "m. So this value is used to limit the overall execution time.");
 				}
 				index++;
 
@@ -99,28 +108,32 @@ public class TestDivider {
 		}
 	}
 
-	private void divideOnMachineNum(List<List<String>> parallelLists, List<Integer> testListTime, int numOfMachines, Queue<Map.Entry<String, Integer>> durationQueue) {
-		/**Queue<Map.Entry<Integer, Integer>> machineQueue = new PriorityQueue<>(
-			(a, b) -> a.getValue() == b.getValue() ? a.getKey().compareTo(b.getKey()) : a.getValue().compareTo(b.getValue())
-		);**/
-		Queue<Map.Entry<String, Integer>> machineQueue = new PriorityQueue<>(new Comparator<Map.Entry<String, Integer>>() {
-			@Override
-			public int compare(Map.Entry<String, Integer> a, Map.Entry<String, Integer> b) {
-				// Compare by value first
-				if (a.getValue().equals(b.getValue())) {
-					// If values are the same, compare by key
-					return a.getKey().compareTo(b.getKey());
-				} else {
-					// Compare by value
-					return a.getValue().compareTo(b.getValue());
-				}
-			}
-		});
-							
+	private void divideOnMachineNum(List<List<String>> parallelLists, List<Integer> testListTime, int numOfMachines,
+			Queue<Map.Entry<String, Integer>> durationQueue) {
+		/**
+		 * Queue<Map.Entry<Integer, Integer>> machineQueue = new PriorityQueue<>( (a, b)
+		 * -> a.getValue() == b.getValue() ? a.getKey().compareTo(b.getKey()) :
+		 * a.getValue().compareTo(b.getValue()) );
+		 **/
+		Queue<Map.Entry<String, Integer>> machineQueue = new PriorityQueue<>(
+				new Comparator<Map.Entry<String, Integer>>() {
+					@Override
+					public int compare(Map.Entry<String, Integer> a, Map.Entry<String, Integer> b) {
+						// Compare by value first
+						if (a.getValue().equals(b.getValue())) {
+							// If values are the same, compare by key
+							return a.getKey().compareTo(b.getKey());
+						} else {
+							// Compare by value
+							return a.getValue().compareTo(b.getValue());
+						}
+					}
+				});
+
 		for (int i = 0; i < numOfMachines; i++) {
 			parallelLists.add(new ArrayList<String>());
 			testListTime.add(0);
-			Map.Entry<Integer,Integer> entry = new AbstractMap.SimpleEntry<>(i, 0);
+			Map.Entry<Integer, Integer> entry = new AbstractMap.SimpleEntry<>(i, 0);
 			machineQueue.offer(entry);
 		}
 		while (!durationQueue.isEmpty()) {
@@ -137,7 +150,9 @@ public class TestDivider {
 
 	private String constructURL(String impl, String plat, String group, String level) {
 		int limit = 10; // limit the number of builds used to calculate the average duration
-		String URL = (arg.getTRSSURL().isEmpty() ? Constants.TRSS_URL : arg.getTRSSURL()) + "/api/getTestAvgDuration?limit=" + limit + "&jdkVersion=" + arg.getJdkVersion() + "&impl=" + impl + "&platform=" + plat;
+		String URL = (arg.getTRSSURL().isEmpty() ? Constants.TRSS_URL : arg.getTRSSURL())
+				+ "/api/getTestAvgDuration?limit=" + limit + "&jdkVersion=" + arg.getJdkVersion() + "&impl=" + impl
+				+ "&platform=" + plat;
 
 		if (tt.isSingleTest()) {
 			URL += "&testName=" + tt.getTestTargetName();
@@ -186,7 +201,7 @@ public class TestDivider {
 		return level;
 	}
 
-	private void parseDuration(Reader reader, Map<String, Integer> map) throws IOException,ParseException {
+	private void parseDuration(Reader reader, Map<String, Integer> map) throws IOException, ParseException {
 		JSONParser parser = new JSONParser();
 		JSONObject jsonObject = (JSONObject) parser.parse(reader);
 		JSONArray testLists = (JSONArray) jsonObject.get("testLists");
@@ -217,7 +232,8 @@ public class TestDivider {
 		System.out.println("Attempting to get test duration data from cached files.");
 		String fileName = "";
 		if (group.equals("")) {
-			fileName = "Test_openjdk" + arg.getJdkVersion() + "_" + impl + "_(" + String.join("|", Constants.ALLGROUPS) + ")_" + plat + ".json";
+			fileName = "Test_openjdk" + arg.getJdkVersion() + "_" + impl + "_(" + String.join("|", Constants.ALLGROUPS)
+					+ ")_" + plat + ".json";
 		} else {
 			fileName = "Test_openjdk" + arg.getJdkVersion() + "_" + impl + "_" + group + "_" + plat + ".json";
 		}
@@ -234,7 +250,7 @@ public class TestDivider {
 				System.out.println("Reading file: " + f.getName().toString());
 				try (Reader reader = new FileReader(f)) {
 					parseDuration(reader, map);
-				} catch (IOException|ParseException e) {
+				} catch (IOException | ParseException e) {
 					System.out.println("Warning: cannot get data from cached files.");
 					// when there's exception, clear the map object and try to get data from TRSS
 					map.clear();
@@ -245,7 +261,7 @@ public class TestDivider {
 		return map;
 	}
 
-	private Map<String, Integer> getDataFromTRSS()  {
+	private Map<String, Integer> getDataFromTRSS() {
 		String impl = arg.getBuildImpl();
 		String plat = arg.getPlat();
 		if (impl.equals("") || plat.equals("")) {
@@ -266,7 +282,7 @@ public class TestDivider {
 		} else {
 			command = "curl --silent --max-time 120 -L -k " + URL;
 		}
-	
+
 		System.out.println("Attempting to get test duration data from TRSS.");
 		System.out.println(command);
 		Process process;
@@ -276,8 +292,8 @@ public class TestDivider {
 			System.out.println("Warning: cannot get data from TRSS.");
 			return map;
 		}
-		try	(InputStream responseStream = process.getInputStream();
-			Reader responseReader = new BufferedReader(new InputStreamReader(responseStream))) {
+		try (InputStream responseStream = process.getInputStream();
+				Reader responseReader = new BufferedReader(new InputStreamReader(responseStream))) {
 			parseDuration(responseReader, map);
 		} catch (IOException | ParseException e) {
 			System.out.println("Warning: cannot parse data from TRSS.");
@@ -287,34 +303,39 @@ public class TestDivider {
 	}
 
 	private void printDefaultTime() {
-		System.out.println("(Default duration assigned, executed tests: " + defaultAvgTestTime / 1000 + "s; not executed tests: 0s.)");
+		System.out.println("(Default duration assigned, executed tests: " + defaultAvgTestTime / 1000
+				+ "s; not executed tests: 0s.)");
 	}
 
 	private Set<String> matchCollections(List<String> list, Map<String, Integer> map) {
-		if (list == null || map == null) return new HashSet<String>();
+		if (list == null || map == null)
+			return new HashSet<String>();
 		Set<String> set = new HashSet<>(map.keySet());
 		set.retainAll(list);
 		return set;
 	}
 
 	private Queue<Map.Entry<String, Integer>> createDurationQueue() {
-		/**Queue<Map.Entry<String, Integer>> durationQueue = new PriorityQueue<>(
-			(a, b) -> a.getValue() == b.getValue() ? b.getKey().compareTo(a.getKey()) : b.getValue().compareTo(a.getValue())
-		);**/
+		/**
+		 * Queue<Map.Entry<String, Integer>> durationQueue = new PriorityQueue<>( (a, b)
+		 * -> a.getValue() == b.getValue() ? b.getKey().compareTo(a.getKey()) :
+		 * b.getValue().compareTo(a.getValue()) );
+		 **/
 
-		Queue<Map.Entry<String, Integer>> machineQueue = new PriorityQueue<>(new Comparator<Map.Entry<String, Integer>>() {
-			@Override
-			public int compare(Map.Entry<String, Integer> a, Map.Entry<String, Integer> b) {
-				// Compare by value first
-				if (a.getValue().equals(b.getValue())) {
-					// If values are the same, compare by key
-					return b.getKey().compareTo(a.getKey());
-				} else {
-					// Compare by value
-					return a.getValue().compareTo(b.getValue());
-				}
-			}
-		});
+		Queue<Map.Entry<String, Integer>> machineQueue = new PriorityQueue<>(
+				new Comparator<Map.Entry<String, Integer>>() {
+					@Override
+					public int compare(Map.Entry<String, Integer> a, Map.Entry<String, Integer> b) {
+						// Compare by value first
+						if (a.getValue().equals(b.getValue())) {
+							// If values are the same, compare by key
+							return b.getKey().compareTo(a.getKey());
+						} else {
+							// Compare by value
+							return a.getValue().compareTo(b.getValue());
+						}
+					}
+				});
 
 		List<String> allTests = new ArrayList<String>();
 		allTests.addAll(testsToExecute);
@@ -422,10 +443,12 @@ public class TestDivider {
 			maxListTime = maxListTime > listTime ? maxListTime : listTime;
 			totalTime += listTime;
 		}
-		System.out.println("Reducing estimated test running time from " + formatTime(totalTime) + " to " + formatTime(maxListTime) + ".\n");
+		System.out.println("Reducing estimated test running time from " + formatTime(totalTime) + " to "
+				+ formatTime(maxListTime) + ".\n");
 
 		for (int i = 0; i < parallelLists.size(); i++) {
-			System.out.println("-------------------------------------testList_" + i + "-------------------------------------");
+			System.out.println(
+					"-------------------------------------testList_" + i + "-------------------------------------");
 			System.out.println("Number of tests: " + parallelLists.get(i).size());
 			System.out.println("Estimated running time: " + formatTime(testListTime.get(i)));
 			System.out.print("TESTLIST=");
@@ -452,7 +475,8 @@ public class TestDivider {
 				divideOnTestTime(parallelLists, testListTime, arg.getTestTime() * 60 * 1000, durationQueue);
 			}
 		} else {
-			divideOnMachineNum(parallelLists, testListTime, Math.max(1, Math.min(arg.getNumOfMachines(), testsToExecute.size())), durationQueue);
+			divideOnMachineNum(parallelLists, testListTime,
+					Math.max(1, Math.min(arg.getNumOfMachines(), testsToExecute.size())), durationQueue);
 		}
 	}
 

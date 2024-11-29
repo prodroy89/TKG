@@ -28,50 +28,58 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import com.sun.management.OperatingSystemMXBean;
+import java.lang.management.OperatingSystemMXBean;
 
 public class MachineInfo {
-	public static final String[] UNAME_CMD = new String[] {"uname", "-a"};
-	public static final String[] SYS_ARCH_CMD = new String[] {"uname", "-m"};
-	public static final String[] PROC_ARCH_CMD = new String[] {"uname", "-p"};
-	public static final String[] LINUX_OS_CMD = new String[] {"bash", "-c", "cat /etc/os-release"};
-	public static final String[] LINUX_OS_NAME_CMD = new String[] {"bash", "-c", "grep '^NAME' /etc/os-release | awk -F'=' ' gsub(/\"/,\"\") { print $2}'"};
-	public static final String[] LINUX_OS_VERSION_CMD = new String[] {"bash", "-c", "grep '^VERSION_ID' /etc/os-release | awk -F'=' ' gsub(/\"/,\"\") { print $2}'"};
+	public static final String[] UNAME_CMD = new String[] { "uname", "-a" };
+	public static final String[] SYS_ARCH_CMD = new String[] { "uname", "-m" };
+	public static final String[] PROC_ARCH_CMD = new String[] { "uname", "-p" };
+	public static final String[] LINUX_OS_CMD = new String[] { "bash", "-c", "cat /etc/os-release" };
+	public static final String[] LINUX_OS_NAME_CMD = new String[] { "bash", "-c",
+			"grep '^NAME' /etc/os-release | awk -F'=' ' gsub(/\"/,\"\") { print $2}'" };
+	public static final String[] LINUX_OS_VERSION_CMD = new String[] { "bash", "-c",
+			"grep '^VERSION_ID' /etc/os-release | awk -F'=' ' gsub(/\"/,\"\") { print $2}'" };
 
-	public static final String[] MICRO_ARCH_CMD = new String[] {"bash", "-c", "cat /proc/cpuinfo | grep -E 'machine|model name' | uniq"};
+	public static final String[] MICRO_ARCH_CMD = new String[] { "bash", "-c",
+			"cat /proc/cpuinfo | grep -E 'machine|model name' | uniq" };
 
-	public static final String[] ULIMIT_CMD = new String[] {"bash", "-c", "ulimit -a"};
+	public static final String[] ULIMIT_CMD = new String[] { "bash", "-c", "ulimit -a" };
 
-	public static final String[] INSTALLED_MEM_CMD = new String[] {"bash", "-c", "grep MemTotal /proc/meminfo | awk '{print $2}"};
-	public static final String[] FREE_MEM_CMD = new String[] {"bash", "-c", "grep MemFree /proc/meminfo | awk '{print $2}"};
-	public static final String[] CPU_CORES_CMD = new String[] {"bash", "-c", "cat /proc/cpuinfo | grep processor | wc -l"};
-	public static final String[] CPU_CORES_CMD_MAC = new String[] {"bash", "-c", "sysctl -n hw.ncpu"};
-	public static final String[] CPU_CORES_CMD_SOLARIS = new String[] {"bash", "-c", "psrinfo | wc -l"};
-	public static final String[] NUMA_CMD = new String[] {"bash", "-c", "numactl --show | grep 'No NUMA support available on this system"};
-	public static final String[] SYS_VIRT_CMD = new String[] {""};
+	public static final String[] INSTALLED_MEM_CMD = new String[] { "bash", "-c",
+			"grep MemTotal /proc/meminfo | awk '{print $2}" };
+	public static final String[] FREE_MEM_CMD = new String[] { "bash", "-c",
+			"grep MemFree /proc/meminfo | awk '{print $2}" };
+	public static final String[] CPU_CORES_CMD = new String[] { "bash", "-c",
+			"cat /proc/cpuinfo | grep processor | wc -l" };
+	public static final String[] CPU_CORES_CMD_MAC = new String[] { "bash", "-c", "sysctl -n hw.ncpu" };
+	public static final String[] CPU_CORES_CMD_SOLARIS = new String[] { "bash", "-c", "psrinfo | wc -l" };
+	public static final String[] NUMA_CMD = new String[] { "bash", "-c",
+			"numactl --show | grep 'No NUMA support available on this system" };
+	public static final String[] SYS_VIRT_CMD = new String[] { "" };
 
 	// Software
-	public static final String[] SYS_OS_CMD = new String[] {"uname", "-s"};
-	public static final String[] GCC_VERSION_CMD = new String[] {"gcc", "-dumpversion"};
-	public static final String[] XLC_VERSION_CMD = new String[] {"bash", "-c", "xlC -qversion | grep 'Version' "};
-	public static final String[] GDB_VERSION_CMD = new String[] {"bash", "-c", "gdb --version | head -1"}; // debugger on Linux
-	public static final String[] LLDB_VERSION_CMD = new String[] {"lldb", "--version"}; // debugger on Darwin/Mac
-	public static final String[] GCLIBC_VERSION_CMD = new String[] {"bash", "-c", "ldd --version | head -1"};
+	public static final String[] SYS_OS_CMD = new String[] { "uname", "-s" };
+	public static final String[] GCC_VERSION_CMD = new String[] { "gcc", "-dumpversion" };
+	public static final String[] XLC_VERSION_CMD = new String[] { "bash", "-c", "xlC -qversion | grep 'Version' " };
+	public static final String[] GDB_VERSION_CMD = new String[] { "bash", "-c", "gdb --version | head -1" }; // debugger
+																												// on
+																												// Linux
+	public static final String[] LLDB_VERSION_CMD = new String[] { "lldb", "--version" }; // debugger on Darwin/Mac
+	public static final String[] GCLIBC_VERSION_CMD = new String[] { "bash", "-c", "ldd --version | head -1" };
 
-	public static final String[] ANT_VERSION_CMD = new String[] {"bash", "-c", "ant -version"};
-	public static final String[] MAKE_VERSION_CMD = new String[] {"bash", "-c", "make --version"};
-	public static final String[] PERL_VERSION_CMD = new String[] {"bash", "-c", "perl --version"};
-	public static final String[] CURL_VERSION_CMD = new String[] {"bash", "-c", "curl --version"};
-	public static final String[] DOCKER_VERSION_CMD = new String[] {"bash", "-c", "docker --version"};
-	public static final String[] PODMAN_VERSION_CMD = new String[] {"bash", "-c", "podman --version"};
-	public static final String[] MAVEN_VERSION_CMD = new String[] {"bash", "-c", "mvn -v"};
-	public static final String[] BASH_VERSION_CMD = new String[] {"bash", "-c", "bash --version"};
-
+	public static final String[] ANT_VERSION_CMD = new String[] { "bash", "-c", "ant -version" };
+	public static final String[] MAKE_VERSION_CMD = new String[] { "bash", "-c", "make --version" };
+	public static final String[] PERL_VERSION_CMD = new String[] { "bash", "-c", "perl --version" };
+	public static final String[] CURL_VERSION_CMD = new String[] { "bash", "-c", "curl --version" };
+	public static final String[] DOCKER_VERSION_CMD = new String[] { "bash", "-c", "docker --version" };
+	public static final String[] PODMAN_VERSION_CMD = new String[] { "bash", "-c", "podman --version" };
+	public static final String[] MAVEN_VERSION_CMD = new String[] { "bash", "-c", "mvn -v" };
+	public static final String[] BASH_VERSION_CMD = new String[] { "bash", "-c", "bash --version" };
 
 	// Console
-	public static final String[] NUM_JAVA_PROCESSES_CMD = new String[] {"bash", "-c", "ps -ef | grep -i [j]ava | wc -l"};
-	public static final String[] ACTIVE_JAVA_PROCESSES_CMD = new String[] {"bash", "-c", "ps -ef | grep -i [j]ava"};
-
+	public static final String[] NUM_JAVA_PROCESSES_CMD = new String[] { "bash", "-c",
+			"ps -ef | grep -i [j]ava | wc -l" };
+	public static final String[] ACTIVE_JAVA_PROCESSES_CMD = new String[] { "bash", "-c", "ps -ef | grep -i [j]ava" };
 
 	private Map<String, Info> infoMap;
 	private CmdExecutor ce;
@@ -120,7 +128,8 @@ public class MachineInfo {
 	}
 
 	private String parseInfo(String output) {
-		if (output == null) return "";
+		if (output == null)
+			return "";
 		Pattern pattern = Pattern.compile("[0-9]+[.][0-9]+([.][0-9]+)?");
 		Matcher matcher = pattern.matcher(output);
 		if (matcher.find()) {
@@ -133,15 +142,15 @@ public class MachineInfo {
 	private ArrayList<Integer> versionStr2ArrList(String version) throws NumberFormatException {
 		String[] versionSplit = version.split("\\.");
 		ArrayList<Integer> versionArr = new ArrayList<Integer>();
-		for (int i=0; i < versionSplit.length; i++) {
+		for (int i = 0; i < versionSplit.length; i++) {
 			versionArr.add(Integer.parseInt(versionSplit[i]));
 		}
 		return versionArr;
 	}
 
-	private void makeSameLength(ArrayList<Integer> list, int requiredLength){
+	private void makeSameLength(ArrayList<Integer> list, int requiredLength) {
 		int differenceInLength = requiredLength - list.size();
-		for (int i=0; i<differenceInLength; i++){
+		for (int i = 0; i < differenceInLength; i++) {
 			list.add(0);
 		}
 	}
@@ -159,20 +168,21 @@ public class MachineInfo {
 			} else if (accVerLen < reqVerLen) {
 				makeSameLength(accVer, reqVerLen);
 			}
-			for (int i=0; i < accVer.size(); i++) {
-				if (reqVer.get(i) > accVer.get(i)){
+			for (int i = 0; i < accVer.size(); i++) {
+				if (reqVer.get(i) > accVer.get(i)) {
 					isValid = false;
 				} else if (reqVer.get(i) < accVer.get(i)) {
 					break;
 				}
 			}
 			if (!isValid) {
-				System.out.println("Warning: required " + info.name + ": " + requriedVersionStr + ". Output:\n" + info.output);
+				System.out.println(
+						"Warning: required " + info.name + ": " + requriedVersionStr + ". Output:\n" + info.output);
 			}
-		} catch (NumberFormatException e){
+		} catch (NumberFormatException e) {
 			// We need to add an option to toggle the failure or warning mode.
 			// isValid = false;
-			System.out.println("Warning: "+ info.name + " information cannot be extracted.");
+			System.out.println("Warning: " + info.name + " information cannot be extracted.");
 			System.out.println(info.name + " output: " + actualVersionStr);
 		}
 		return isValid;
@@ -189,8 +199,8 @@ public class MachineInfo {
 		// Do not fail if the check not pass for the build environment.
 		// We need to add an option to toggle the failure or warning mode.
 		// if (!valid) {
-		//	System.exit(1);
-		//}
+		// System.exit(1);
+		// }
 	}
 
 	private void getSysInfo() {
@@ -220,12 +230,11 @@ public class MachineInfo {
 		} else if (microArchOutput.contains("2965")) {
 			microArch = "z13";
 		} else if (microArchOutput.contains("2964")) {
-			microArch= "z13";
-		}
-		else {
+			microArch = "z13";
+		} else {
 			System.out.println("Unfamiliar microArch detected in TKG. It will not be added in TKG microArch!");
 			System.out.println("microArchOutput: " + microArchOutput);
-	 	}
+		}
 
 		if (!microArch.isEmpty()) {
 			putInfo(new Info("microArch", MICRO_ARCH_CMD, microArch, null));
@@ -258,7 +267,7 @@ public class MachineInfo {
 
 	private void getPrerequisiteInfo() {
 		putInfo(new Info("antVersion", ANT_VERSION_CMD, ce.execute(ANT_VERSION_CMD), "1.9.6"));
-		/* required version is 4.1, but some exception applies, do not verify for now*/
+		/* required version is 4.1, but some exception applies, do not verify for now */
 		putInfo(new Info("makeVersion", MAKE_VERSION_CMD, ce.execute(MAKE_VERSION_CMD), null));
 		putInfo(new Info("perlVersion", PERL_VERSION_CMD, ce.execute(PERL_VERSION_CMD), "5.10.1"));
 		putInfo(new Info("curlVersion", CURL_VERSION_CMD, ce.execute(CURL_VERSION_CMD), "7.20.0"));
@@ -270,21 +279,32 @@ public class MachineInfo {
 
 	private void getSpaceInfo() {
 		File file = Paths.get("").toAbsolutePath().toFile();
-		putInfo(new Info("File path", new String[] {"Paths.get(\"\").toAbsolutePath().toFile().getAbsolutePath()"}, file.getAbsolutePath(), null));
-		putInfo(new Info("Total space (bytes)", new String[] {"Paths.get(\"\").toAbsolutePath().toFile().getTotalSpace()"}, String.valueOf(file.getTotalSpace()), null));
-		putInfo(new Info("Free space (bytes)", new String[] {"Paths.get(\"\").toAbsolutePath().toFile().getFreeSpace()"}, String.valueOf(file.getFreeSpace()), null));
-		putInfo(new Info("Usable space (bytes)", new String[] {"Paths.get(\"\").toAbsolutePath().toFile().getUsableSpace()"}, String.valueOf(file.getUsableSpace()), null));
+		putInfo(new Info("File path", new String[] { "Paths.get(\"\").toAbsolutePath().toFile().getAbsolutePath()" },
+				file.getAbsolutePath(), null));
+		putInfo(new Info("Total space (bytes)",
+				new String[] { "Paths.get(\"\").toAbsolutePath().toFile().getTotalSpace()" },
+				String.valueOf(file.getTotalSpace()), null));
+		putInfo(new Info("Free space (bytes)",
+				new String[] { "Paths.get(\"\").toAbsolutePath().toFile().getFreeSpace()" },
+				String.valueOf(file.getFreeSpace()), null));
+		putInfo(new Info("Usable space (bytes)",
+				new String[] { "Paths.get(\"\").toAbsolutePath().toFile().getUsableSpace()" },
+				String.valueOf(file.getUsableSpace()), null));
 	}
 
 	private void getRuntimeInfo() {
-		putInfo(new Info("vmVendor", new String[] {"ManagementFactory.getRuntimeMXBean().getSpecVendor()"}, ManagementFactory.getRuntimeMXBean().getSpecVendor(), null));
-		putInfo(new Info("vmVersion", new String[] {"ManagementFactory.getRuntimeMXBean().getVmVersion()"}, ManagementFactory.getRuntimeMXBean().getVmVersion(), null));
+		putInfo(new Info("vmVendor", new String[] { "ManagementFactory.getRuntimeMXBean().getSpecVendor()" },
+				ManagementFactory.getRuntimeMXBean().getSpecVendor(), null));
+		putInfo(new Info("vmVersion", new String[] { "ManagementFactory.getRuntimeMXBean().getVmVersion()" },
+				ManagementFactory.getRuntimeMXBean().getVmVersion(), null));
 	}
 
 	private void getPhysicalMemoryInfo() {
 		OperatingSystemMXBean osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
-		putInfo(new Info("Total Physical Memory Size", new String[] {"osBean.getTotalPhysicalMemorySize()"}, String.valueOf(osBean.getTotalPhysicalMemorySize()), null));
-		putInfo(new Info("Free Physical Memory Size", new String[] {"osBean.getFreePhysicalMemorySize()"}, String.valueOf(osBean.getFreePhysicalMemorySize()), null));
+		putInfo(new Info("Total Physical Memory Size", new String[] { "osBean.getTotalPhysicalMemorySize()" },
+				String.valueOf(osBean.getTotalPhysicalMemorySize()), null));
+		putInfo(new Info("Free Physical Memory Size", new String[] { "osBean.getFreePhysicalMemorySize()" },
+				String.valueOf(osBean.getFreePhysicalMemorySize()), null));
 	}
 
 	private void getOtherInfo() {

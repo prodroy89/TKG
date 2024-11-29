@@ -16,7 +16,7 @@ package org.testKitGen;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.HashSet;
 import java.util.Arrays;
 
 public final class Constants {
@@ -41,11 +41,18 @@ public final class Constants {
 	public static final List<String> ALLIMPLS = Arrays.asList("openj9", "ibm", "hotspot", "sap");
 	public static final List<String> ALLLEVELS = Arrays.asList("sanity", "extended", "special", "dev");
 	public static final List<String> ALLTYPES = Arrays.asList("regular", "native");
-	public static final Set<String> INGORESPECS = Arrays
-			.asList("linux_x86-32_hrt", "linux_x86-64_cmprssptrs_gcnext", "linux_ppc_purec", "linux_ppc-64_purec",
-					"linux_ppc-64_cmprssptrs_purec", "linux_x86-64_cmprssptrs_cloud")
-			.stream().collect(Collectors.toSet());
+	/**
+	 * public static final Set<String> INGORESPECS = Arrays
+	 * .asList("linux_x86-32_hrt", "linux_x86-64_cmprssptrs_gcnext",
+	 * "linux_ppc_purec", "linux_ppc-64_purec", "linux_ppc-64_cmprssptrs_purec",
+	 * "linux_x86-64_cmprssptrs_cloud") .stream().collect(Collectors.toSet());
+	 **/
+	public static final Set<String> INGORESPECS = new HashSet<>(
+			Arrays.asList("linux_x86-32_hrt", "linux_x86-64_cmprssptrs_gcnext", "linux_ppc_purec", "linux_ppc-64_purec",
+					"linux_ppc-64_cmprssptrs_purec", "linux_x86-64_cmprssptrs_cloud"));
+
 	public static final String TRSS_URL = "https://trss.adoptopenjdk.net";
+
 	private Constants() {
 	}
 }

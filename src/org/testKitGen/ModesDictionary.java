@@ -45,7 +45,7 @@ public class ModesDictionary {
 
 	public ModesDictionary(Arguments arg) {
 		this.arg = arg;
-		modesXml= arg.getProjectRootDir() + "/TKG/" + Constants.MODESXML;
+		modesXml = arg.getProjectRootDir() + "/TKG/" + Constants.MODESXML;
 		ottawaCsv = arg.getProjectRootDir() + "/TKG/" + Constants.OTTAWACSV;
 		spec2platMap = new HashMap<String, String>();
 		invalidSpecsMap = new HashMap<String, List<String>>();
@@ -133,23 +133,26 @@ public class ModesDictionary {
 							}
 						}
 						// remove INGORESPECS from invalidSpecs array
-						/**invalidSpecs = new ArrayList<String>(invalidSpecs.stream()
-								.filter(c -> !Constants.INGORESPECS.contains(c)).collect(Collectors.toList()));**/
-                        List<String> invalidSpecs = new ArrayList<String>(Arrays.asList("spec1", "spec2", "spec3", "spec4"));
-                        Set<String> INGORESPECS = new HashSet<>(Arrays.asList("spec2", "spec3"));
+						/**
+						 * invalidSpecs = new ArrayList<String>(invalidSpecs.stream() .filter(c ->
+						 * !Constants.INGORESPECS.contains(c)).collect(Collectors.toList()));
+						 **/
+						List<String> invalidSpecs = new ArrayList<String>(
+								Arrays.asList("spec1", "spec2", "spec3", "spec4"));
+						Set<String> INGORESPECS = new HashSet<>(Arrays.asList("spec2", "spec3"));
 
-                        List<String> filteredSpecs = new ArrayList<>();
+						List<String> filteredSpecs = new ArrayList<>();
 
-                        // Manually filter out items from invalidSpecs that are in INGORESPECS
-                        for (String spec : invalidSpecs) {
-                            if (!INGORESPECS.contains(spec)) {  // Check if the spec is not in INGORESPECS
-                              filteredSpecs.add(spec);        // Add to the filtered list if it's not in INGORESPECS
-                            }
-                        }
+						// Manually filter out items from invalidSpecs that are in INGORESPECS
+						for (String spec : invalidSpecs) {
+							if (!INGORESPECS.contains(spec)) { // Check if the spec is not in INGORESPECS
+								filteredSpecs.add(spec); // Add to the filtered list if it's not in INGORESPECS
+							}
+						}
 
-                        invalidSpecs = filteredSpecs;
+						invalidSpecs = filteredSpecs;
 
-                        System.out.println(invalidSpecs);  // Output: [spec1, spec4]
+						System.out.println(invalidSpecs); // Output: [spec1, spec4]
 						// if invalidSpecs array is empty, set it to none
 						if (invalidSpecs.size() == 0) {
 							invalidSpecs.add("none");
