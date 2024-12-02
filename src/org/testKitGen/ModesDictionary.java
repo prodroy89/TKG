@@ -132,17 +132,22 @@ public class ModesDictionary {
 								invalidSpecs.add(specs.get(j));
 							}
 						}
+						
 						// remove INGORESPECS from invalidSpecs array
 						/**
 						 * invalidSpecs = new ArrayList<String>(invalidSpecs.stream() .filter(c ->
 						 * !Constants.INGORESPECS.contains(c)).collect(Collectors.toList()));
 						 **/
-						List<String> invalidSpecs = new ArrayList<String>(
+						 
+						List<String> filteredSpecs = new ArrayList<String>(); // A new list to store the filtered specs
 						for (String spec : invalidSpecs) {
 							if (!INGORESPECS.contains(spec)) { // Check if the spec is not in INGORESPECS
 								invalidSpecs.add(spec); // Add to the filtered list if it's not in INGORESPECS
 							}
 						}
+						
+						invalidSpecs = filteredSpecs;
+						
 						// if invalidSpecs array is empty, set it to none
 						if (invalidSpecs.size() == 0) {
 							invalidSpecs.add("none");
