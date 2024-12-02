@@ -60,7 +60,7 @@ public class TestDivider {
 		Queue<Map.Entry<String, Integer>> machineQueue = new PriorityQueue<>(
 				new Comparator<Map.Entry<String, Integer>>() {
 					@Override
-					public int compare(Map.Entry<String, Integer> a, Map.Entry<String, Integer> b) {
+					public int compare(Map.Entry<Integer, Integer> a, Map.Entry<Integer, Integer> b) {
 						// Compare by value first
 						if (a.getValue().equals(b.getValue())) {
 							// If values are the same, compare by key
@@ -118,7 +118,7 @@ public class TestDivider {
 		Queue<Map.Entry<String, Integer>> machineQueue = new PriorityQueue<>(
 				new Comparator<Map.Entry<String, Integer>>() {
 					@Override
-					public int compare(Map.Entry<String, Integer> a, Map.Entry<String, Integer> b) {
+					public int compare(Map.Entry<Integer, Integer> a, Map.Entry<Integer, Integer> b) {
 						// Compare by value first
 						if (a.getValue().equals(b.getValue())) {
 							// If values are the same, compare by key
@@ -325,7 +325,7 @@ public class TestDivider {
 		Queue<Map.Entry<String, Integer>> durationQueue = new PriorityQueue<>(
 				new Comparator<Map.Entry<String, Integer>>() {
 					@Override
-					public int compare(Map.Entry<String, Integer> a, Map.Entry<String, Integer> b) {
+					public int compare(Map.Entry<Integer, Integer> a, Map.Entry<Integer, Integer> b) {
 						// Compare by value first
 						if (a.getValue().equals(b.getValue())) {
 							// If values are the same, compare by key

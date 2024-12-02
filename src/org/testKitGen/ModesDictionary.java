@@ -139,10 +139,10 @@ public class ModesDictionary {
 						 * !Constants.INGORESPECS.contains(c)).collect(Collectors.toList()));
 						 **/
 						 
-						List<String> filteredSpecs = new ArrayList<String>(); // A new list to store the filtered specs
+						ArrayList<String> filteredSpecs = new ArrayList<String>(); // A new list to store the filtered specs
 						for (String spec : invalidSpecs) {
 							if (!INGORESPECS.contains(spec)) { // Check if the spec is not in INGORESPECS
-								invalidSpecs.add(spec); // Add to the filtered list if it's not in INGORESPECS
+								filteredSpecs.add(spec); // Add to the filtered list if it's not in INGORESPECS
 							}
 						}
 						
