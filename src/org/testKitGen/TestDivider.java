@@ -322,7 +322,7 @@ public class TestDivider {
 		 * b.getValue().compareTo(a.getValue()) );
 		 **/
 
-		Queue<Map.Entry<String, Integer>> machineQueue = new PriorityQueue<>(
+		Queue<Map.Entry<String, Integer>> durationQueue = new PriorityQueue<>(
 				new Comparator<Map.Entry<String, Integer>>() {
 					@Override
 					public int compare(Map.Entry<String, Integer> a, Map.Entry<String, Integer> b) {
