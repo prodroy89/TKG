@@ -24,7 +24,7 @@
 	<property name="ascii.test.dir" value="${BUILD_ROOT}" />
 	<property name="JDK_VERSION" value=""/>
 	<property name="TEST_JDK_HOME" value="${TEST_JDK_HOME}" />
-	<property name="JAVAC" value="/usr/bin/javac" />
+	<property name="JAVAC" value="/home/jenkins/Prodip/Builds/ibm-java-x86_64-80/bin/javac" />
 
 	<import file="./getDependencies.xml"/>
 
