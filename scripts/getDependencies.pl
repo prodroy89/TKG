@@ -183,11 +183,14 @@ my %base = (
 		url => 'https://builds.shipilev.net/jcstress/jcstress-tests-all-20240222.jar',
 		fname => 'jcstress-tests-all-20240222.jar',
 		sha1 => '200da75e67689e8a604ec6fe9a6f55b2c000b6ce'
+<<<<<<< HEAD
 	},
 	maven => {
 		url => 'https://dlcdn.apache.org/maven/maven-3/3.9.8/binaries/apache-maven-3.9.8-bin.tar.gz',
 		fname => 'apache-maven-bin.tar.gz',
 		sha1 => '7f15c63c129f036dd5c96b1a591ed8d888f75617'
+=======
+>>>>>>> 58ce49283691162421034a3eb0a985e839523bf4
 	});
 
 my %system_jars = (
