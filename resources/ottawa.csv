@@ -7,7 +7,7 @@ capabilities,"vm:standard,arch:32bit,os:win,arch:x86,test:java9","vm:standard,ar
 variation:DDRTest,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,yes,yes
 variation:TckLevel101,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,yes,yes
 variation:TckLevel102,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,yes,yes
-variation:NoOptions,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes
+variation:NoOptions,No,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes
 variation:CEEHDLR,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,yes,yes,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,yes,yes
 variation:NoJit,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes
 variation:JitCount0,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,no,no,no,yes,yes,yes,yes
@@ -179,3 +179,4 @@ variation:Mode607-OSRG,no,no,yes,yes,no,no,yes,yes,no,no,yes,yes,no,no,no,no,no,
 variation:Mode610-OSRG,no,no,yes,yes,no,no,yes,yes,no,no,yes,yes,no,yes,yes,no,no,yes,yes,yes,yes,no,no,yes,yes,no,no,no,yes,yes,yes,yes,no,no,yes,yes,no,yes,yes,yes,no,yes,yes,no,no,no,yes,yes,yes,yes
 variation:Mode612-OSRG,no,no,yes,yes,no,no,yes,yes,no,no,yes,yes,no,yes,yes,no,no,yes,yes,yes,yes,no,no,yes,yes,no,no,no,yes,yes,yes,yes,no,no,yes,yes,no,yes,yes,yes,no,yes,yes,no,no,no,yes,yes,yes,yes
 variation:Mode1000,yes,no,no,no,yes,no,no,no,yes,no,no,no,no,no,no,yes,no,no,no,no,no,yes,no,no,no,yes,yes,no,no,no,no,no,yes,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,no,yes
+
