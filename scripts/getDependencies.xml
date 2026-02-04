@@ -17,7 +17,6 @@
 	<description>
 		Get Third Party Dependencies
 	</description>
-
 	<!-- set default LIB property to all -->
 	<property name="LIB" value="all"/>
 	<target name="getJtregVersion">
@@ -67,7 +66,6 @@
 			</else>
 		</if>
 		<echo message="jtreg version used is : ${jtregTar}"/>
-
 		<if>
 			<or>
 				<equals arg1="${JDK_IMPL}" arg2="ibm"/>
@@ -83,7 +81,6 @@
 		<var name="LIB" unset="true"/>
 		<property name="LIB" value="${jtregTar}${openj9jtregtimeouthandler}"/>
 	</target>
-
 	<target name="getJtreg" depends="getJtregVersion,getDependentLibs">
 		<mkdir dir="${DEST}"/>
 		<if>
@@ -116,22 +113,21 @@
 			</else>
 		</if>
 	</target>
-
-<target name="getDependentLibs" unless="skipDependency">
-    <exec executable="bash" osfamily="windows" failonerror="true">
-        <arg value="-lc"/>
-        <arg value="/usr/bin/perl ${TEST_ROOT}/TKG/scripts/getDependencies.pl -path ${LIB_DIR} -task default -dependencyList ${LIB}"/>
-    </exec>
-
-    <exec executable="perl" osfamily="unix" failonerror="true">
-        <arg value="${TEST_ROOT}/TKG/scripts/getDependencies.pl"/>
-        <arg value="-path"/>
-        <arg value="${LIB_DIR}"/>
-        <arg value="-task"/>
-        <arg value="default"/>
-        <arg value="-dependencyList"/>
-        <arg value="${LIB}"/>
-    </exec>
-</target>
-
+	<target name="getDependentLibs" unless="skipDependency">
+		<property name="perl.exec" value="/usr/bin/perl"/>
+		<condition property="perl.exec" value="perl">
+			<not>
+				<available file="/usr/bin/perl"/>
+			</not>
+		</condition>
+		<exec executable="${perl.exec}" failonerror="true">
+			<arg value="${TEST_ROOT}/TKG/scripts/getDependencies.pl"/>
+			<arg value="-path"/>
+			<arg value="${LIB_DIR}"/>
+			<arg value="-task"/>
+			<arg value="default"/>
+			<arg value="-dependencyList"/>
+			<arg value="${LIB}"/>
+		</exec>
+	</target>
 </project>
